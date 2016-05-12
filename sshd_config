@@ -1,0 +1,6 @@
+Port 55222
+PermitRootLogin no
+PasswordAuthentication no
+AllowUsers support
+LogLevel VERBOSE
+PermitEmptyPasswords no

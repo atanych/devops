@@ -1,0 +1,39 @@
+*mangle
+:PREROUTING ACCEPT [24:1528]
+:INPUT ACCEPT [24:1528]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [10:1856]
+:POSTROUTING ACCEPT [10:1856]
+COMMIT
+*nat
+:PREROUTING ACCEPT [10:584]
+:INPUT ACCEPT [0:0]
+:OUTPUT ACCEPT [1:136]
+:POSTROUTING ACCEPT [1:136]
+COMMIT
+*filter
+:INPUT DROP [10:584]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [3:360]
+
+-I INPUT 1 -i lo -p all -j ACCEPT
+-I INPUT -s 127.0.0.1 -j ACCEPT
+
+-A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+
+#ssh
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 55222 -j ACCEPT
+#web
+-A INPUT -p tcp -m state --state NEW -m multiport --dports 80,443 -j ACCEPT
+#apple push
+-A INPUT -p tcp -m state --state NEW -m multiport --dports 2195,2196 -j ACCEPT
+#chat
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 5223 -j ACCEPT
+
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 9292 -j ACCEPT
+
+
+-A INPUT -j DROP
+
+COMMIT
