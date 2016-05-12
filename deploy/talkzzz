@@ -1,0 +1,66 @@
+#!/bin/bash
+# add to /etc/rc.local
+#    su -c '/home/rails/scripts/talkzzz'
+#
+# add to /home/rails/.profile
+#    PATH=$HOME/scripts/:$PATH
+#
+
+APP="talkzzz"
+export RAILS_ENV=staging
+
+if [ "$USER" != "rails" ]
+then
+    echo "This script must be run under rails user. Exiting ..." >&2
+fi
+
+source /etc/profile.d/rvm.sh
+
+cd /home/rails/rails-apps/$APP
+
+function start() {
+    do_start
+}
+
+function stop() {
+    do_stop
+}
+
+function restart() {
+    do_stop
+    do_start
+}
+
+function status() {
+    echo "Not implemented"
+}
+
+function do_start() {
+    sidekiq -d -L log/sidekiq.log -e $RAILS_ENV
+    puma --preload
+}
+
+function do_stop() {
+    ps -ef | grep "sidekiq" | awk '{print $2}' | xargs kill
+    kill `cat tmp/pids/puma.pid`
+}
+
+case "$1" in
+  start)
+        start
+        ;;
+  restart|"")
+        restart
+        ;;
+  stop)
+        stop
+        ;;
+  status)
+        echo "Not inplemented yet"
+        ;;
+  *)
+        echo "Usage: ${APP} [start|stop|restart|status]. Default is restart" >&2
+        ;;
+esac
+
+exit 0
