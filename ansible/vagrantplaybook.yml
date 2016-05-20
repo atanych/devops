@@ -1,0 +1,33 @@
+---
+- hosts: all
+
+  roles:
+
+  - role: jdauphant.nginx
+    become: yes
+    nginx_official_repo: true
+    nginx_http_params:
+      - sendfile "off"
+      - access_log "/var/log/nginx/access.log"
+    nginx_sites:
+      talkzzz.me:
+          - listen 80 default_server
+          - server_name _
+          - root "/var/www/talkzzz.me"
+          - location / { try_files $uri $uri/ /index.html; }
+    nginx_configs:
+      proxy:
+        - proxy_set_header X-Real-IP  $remote_addr
+        - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
+
+  - role: 'ssilab.nodejs'
+    nodejs_update_npm: true
+    nodejs_major_version: 4
+    nodejs_minor_version: x
+    nodejs_user: 'vagrant'
+    nodejs_global_packages:
+      - 'bower'
+      - 'gulp'
+      - 'forever'
+    nodejs_app_root: '/var/www/talkzzz.me'
+    nodejs_do_bower_install: true

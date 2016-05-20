@@ -1,0 +1,50 @@
+---
+  - name: Add user
+    sudo: yes
+    user:
+      name={{ username }}
+      shell=/bin/bash
+
+  - name: Add SSH public key to user
+    sudo: yes
+    authorized_key:
+      user="{{ username }}"
+      key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+
+  - name: Add user to sudoers
+    sudo: yes
+    lineinfile:
+      dest=/etc/sudoers state=present
+      regexp='^{{ username }}'
+      line='{{ username }} ALL=(ALL) NOPASSWD:ALL'
+
+  - name: Disallow root SSH access
+    sudo: yes
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^\#*PermitRootLogin"
+      line="PermitRootLogin yes"
+      state=present
+    notify:
+      - restart ssh
+
+  - name: Disallow SSH password authentication
+    sudo: yes
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^\#*PasswordAuthentication"
+      line="PasswordAuthentication no"
+      state=present
+    notify:
+      - restart ssh
+
+
+  - name: Disallow SSH GSS API authentication
+    sudo: yes
+    lineinfile:
+      dest=/etc/ssh/sshd_config
+      regexp="^\#*GSSAPIAuthentication"
+      line="GSSAPIAuthentication no"
+      state=present
+    notify:
+      - restart ssh

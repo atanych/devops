@@ -1,0 +1,44 @@
+---
+  - name: Set hostname
+    sudo: yes
+    hostname: name={{ srv_hostname }}
+
+  - name: Add multiverse repo
+    sudo: yes
+    apt_repository: repo='deb http://archive.ubuntu.com/ubuntu trusty multiverse' state=present
+
+  - name: Update apt
+    sudo: yes
+    apt: update_cache=yes cache_valid_time=3600
+
+  - name: Set timezone to Europe/Moscow
+    sudo: yes
+    action: shell echo Europe/Moscow > /etc/timezone
+
+  - name: Set localtime to Europe/Moscow
+    sudo: yes
+    file: src=/usr/share/zoneinfo/Europe/Moscow dest=/etc/localtime
+
+  - name: Reconfigure tzdata
+    sudo: yes
+    action: command dpkg-reconfigure -f noninteractive tzdata
+
+  - name: Install System Packages
+    sudo: yes
+    apt: pkg={{ item }} state=latest
+    with_items:
+      - curl
+      - wget
+      - htop
+      - mc
+      - fail2ban
+      - git
+      - mercurial
+      - apt-utils
+      - bsdutils
+      - dialog
+      - whiptail
+
+  - name: Hide openssh version
+    sudo: yes
+    lineinfile: dest=/etc/ssh/sshd_config line="DebianBanner no"
