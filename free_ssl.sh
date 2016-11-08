@@ -1,3 +1,4 @@
+# 0. sudo apt-get install letsencrypt (view https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04)
 # 1. create kay and crt
 sudo letsencrypt certonly -a webroot --webroot-path=/var/www/html -d chat2desk.com -d www.chat2desk.com
 # 2. ssl_trusted_certificate /etc/ssl/desk.chat2brand/ca-certs.pem;
