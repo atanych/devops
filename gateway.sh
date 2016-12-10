@@ -61,7 +61,7 @@ server {
     fastcgi_param APP_ENV prod;
 
     try_files $uri =404;
-    fastcgi_pass unix:/run/php/php5.6-fpm.sock;
+    fastcgi_pass unix:/var/run/php/php5.6-fpm.sock;
     fastcgi_index index.php;
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
   } 
