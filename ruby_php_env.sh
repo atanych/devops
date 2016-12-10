@@ -91,7 +91,11 @@ php yii migrate
 sudo npm install -g bower
 sudo npm install -g gulp-cli
 npm install
-
+mkdir ~/scripts
+nano ~/scripts/deploy_php.sh
+nano ~/.bash_profile
+<add alias> alias deploy_php="bash --login ~/scripts/deploy_php.sh"
+source ~/.bash_profile
 
 cd /var/www/gateway
 composer install
@@ -103,12 +107,15 @@ rvm install 2.3.0
 rvm @global do gem install bundler
 sudo apt-get install libmysqlclient-dev -y
 cd /var/www/api_hd
+ssh-keygen -t rsa -b 4096 -C "test@test.com"
+cat ~/.ssh/id_rsa.pub
 bundle install
 cp /var/www/api_hd/config/database.sample.yml /var/www/api_hd/config/database.yml
+nano /var/www/api_hd/config/database.yml
 RAILS_ENV=production rake db:migrate
-nano /usr/local/bin/api_hd
+sudo nano /usr/local/bin/api_hd
+sudo chmod 777 /usr/local/bin/api_hd
 <add bash script>
-mkdir ~/scripts
 nano ~/scripts/deploy_api.sh
 <add [bash] deploy_api>
 nano ~/.bash_profile
@@ -116,7 +123,10 @@ nano ~/.bash_profile
 source ~/.bash_profile
 mkdir /var/www/api_hd/tmp && mkdir /var/www/api_hd/tmp/pids
 cp /var/www/api_hd/config/puma.backup.rb /var/www/api_hd/config/puma.rb
+nano /var/www/api_hd/config/puma.rb
 <add daemonize>
 mkdir /var/www/api_hd/tmp/sockets
 touch /var/www/api_hd/tmp/sockets/puma.sock
+sudo chmod 777 /var/www/api_hd/tmp/sockets/puma.sock
 deploy_api
+
