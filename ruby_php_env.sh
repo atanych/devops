@@ -8,6 +8,23 @@ sudo apt-get purge apache2
 sudo apt-get install nginx nginx-extras -y
 sudo apt-get install mysql-server -y
 
+# nginx config
+sudo nano /etc/nginx/nginx.conf
+worker_connections 1024;
+geo $limited {
+  default 1;
+  # whitelist:
+  95.213.231.70/32 0;
+}
+
+map $limited $limit {
+  1 $binary_remote_addr;
+  0 "";
+}
+limit_conn_zone   $limit  zone=addr:10m;
+limit_req_zone  $limit  zone=one:10m   rate=1r/s;
+client_max_body_size 50m;
+
 # mysql config
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
 [mysqld]
@@ -43,3 +60,8 @@ curl -s https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 composer global require "fxp/composer-asset-plugin:~1.1.1"
 composer install
+php yii migrate
+
+cd /var/www/gateway
+composer install
+sudo nano /etc/nginx/sites-enabled/gateway
