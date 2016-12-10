@@ -7,6 +7,8 @@ sudo apt-get install php5.6-cli php5.6-common php5.6-mysql php5.6-gd php5.6-fpm 
 sudo apt-get purge apache2
 sudo apt-get install nginx nginx-extras -y
 sudo apt-get install mysql-server -y
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install nodejs redis-server -y
 
 # nginx config
 sudo nano /etc/nginx/nginx.conf
@@ -24,6 +26,20 @@ map $limited $limit {
 limit_conn_zone   $limit  zone=addr:10m;
 limit_req_zone  $limit  zone=one:10m   rate=1r/s;
 client_max_body_size 50m;
+
+# php.ini
+sudo nano /etc/php/5.6/fpm/php.ini
+short_open_tag = On
+session.gc_maxlifetime = 2592000
+memory_limit = 1024M
+
+# php5.6-fpm config
+sudo nano /etc/php/5.6/fpm/pool.d/www.conf
+pm.max_children = 600
+pm.start_servers = 240
+pm.min_spare_servers = 160
+pm.max_spare_servers = 320
+sudo service php5.6-fpm restart
 
 # mysql config
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
@@ -52,8 +68,11 @@ cp /var/www/helpdesk/web/js/widget/new/params.sample.js /var/www/helpdesk/web/js
 mkdir /var/www/helpdesk/web/images/users/client
 mkdir /var/www/helpdesk/web/images/users/temp
 sudo chmod 777 -R /var/www/helpdesk/web/images/users
-chmod 777 -R /var/www/helpdesk/web/images/users/client
-chmod 777 -R /var/www/gateway/web/images
+sudo chmod 777 -R /var/www/helpdesk/web/images/users/client
+sudo chmod 777 -R /var/www/gateway/web/images
+sudo chmod 777 -R /var/www/helpdesk/web/assets/
+sudo chmod 777 -R /var/www/helpdesk/runtime/
+sudo chmod 777 -R /var/www/helpdesk/web/assets/
 sudo mkdir /var/log/gateway
 sudo chmod 777 -R /var/log/gateway
 curl -s https://getcomposer.org/installer | php
@@ -61,7 +80,12 @@ sudo mv composer.phar /usr/local/bin/composer
 composer global require "fxp/composer-asset-plugin:~1.1.1"
 composer install
 php yii migrate
+sudo npm install -g bower
+sudo npm install -g gulp-cli
+npm install
+
 
 cd /var/www/gateway
 composer install
 sudo nano /etc/nginx/sites-enabled/gateway
+
