@@ -11,6 +11,14 @@ curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install nodejs redis-server -y
 
 # nginx config
+sudo rm /etc/nginx/sites-enabled/default
+sudo mkdir /usr/share/nginx/www
+sudo chmod 777 -R /usr/share/nginx/www
+sudo touch /usr/share/nginx/www/50x.html
+echo "500 error" >> /usr/share/nginx/www/50x.html
+sudo nano /etc/nginx/sites-enabled/helpdesk
+sudo nano /etc/nginx/sites-enabled/gateway
+sudo nano /etc/nginx/sites-enabled/api
 sudo nano /etc/nginx/nginx.conf
 worker_connections 1024;
 geo $limited {
@@ -87,5 +95,28 @@ npm install
 
 cd /var/www/gateway
 composer install
-sudo nano /etc/nginx/sites-enabled/gateway
 
+# ruby
+\curl -L https://get.rvm.io | bash -s stable
+source /etc/profile.d/rvm.sh
+rvm install 2.3.0
+rvm @global do gem install bundler
+sudo apt-get install libmysqlclient-dev -y
+cd /var/www/api_hd
+bundle install
+cp /var/www/api_hd/config/database.sample.yml /var/www/api_hd/config/database.yml
+RAILS_ENV=production rake db:migrate
+nano /usr/local/bin/api_hd
+<add bash script>
+mkdir ~/scripts
+nano ~/scripts/deploy_api.sh
+<add [bash] deploy_api>
+nano ~/.bash_profile
+<add alias> alias deploy_api="bash --login ~/scripts/deploy_api.sh"
+source ~/.bash_profile
+mkdir /var/www/api_hd/tmp && mkdir /var/www/api_hd/tmp/pids
+cp /var/www/api_hd/config/puma.backup.rb /var/www/api_hd/config/puma.rb
+<add daemonize>
+mkdir /var/www/api_hd/tmp/sockets
+touch /var/www/api_hd/tmp/sockets/puma.sock
+deploy_api
