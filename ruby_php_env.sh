@@ -47,6 +47,12 @@ pm.max_children = 600
 pm.start_servers = 240
 pm.min_spare_servers = 160
 pm.max_spare_servers = 320
+request_terminate_timeout = 30s
+php_flag[display_errors] = on
+php_admin_value[error_log] = /var/log/fpm-php.www.log
+php_admin_flag[log_errors] = on
+php_admin_value[memory_limit] = 32M
+
 sudo service php5.6-fpm restart
 
 # mysql config
