@@ -24,3 +24,5 @@ docker commit -m 'commit message' 7c8d922dc0ea atanych/python # commit current c
 docker push atanych/python
 docker login
 
+docker history atanych/python - image history
+
