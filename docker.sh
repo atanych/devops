@@ -20,7 +20,7 @@ docker build -t atanych . # create image from dockerfile
 
 docker exec -it 1da24e7e5f6f bash # enter to container 
 
-docker commit 7c8d922dc0ea atanych/python # commit current container 7c8d922dc0ea to image atanych/python
+docker commit -m 'commit message' 7c8d922dc0ea atanych/python # commit current container 7c8d922dc0ea to image atanych/python
 docker push atanych/python
 docker login
 
