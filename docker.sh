@@ -7,6 +7,9 @@ docker run -it busybox sh # run container in interative mode
 docker run -p 8888:80 prakhar1989/static-site # run and map ports
 docker run -d -P --name st static # all ports, daemon, st - container name, static - image name
 docker run -v /var/www:/usr/share/ -d -p 8888:80 --name st static # mount /var/www -> /usr/share
+# trick http://stackoverflow.com/questions/28212380/why-docker-container-exits-immediately 
+docker run -dit ubuntu
+
 docker run busybox echo "hello from busybox" # run 
 docker stop <container_name>
 docker start <container_name>
