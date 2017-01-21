@@ -34,3 +34,12 @@ docker history atanych/python - image history
 docker pull phusion/baseimage
 docker run -i -t phusion/baseimage:latest /sbin/my_init -- bash -l
 docker commit <container_hash> atanych/<repo>
+
+# backup volumes
+docker run --rm --volumes-from dbstore -v $(pwd):/backup ubuntu tar cvf /backup/backup.tar /dbdata
+docker run -v /dbdata --name dbstore2 ubuntu /bin/bash
+docker run --rm --volumes-from dbstore2 -v $(pwd):/backup ubuntu bash -c "cd /dbdata && tar xvf /backup/backup.tar --strip 1"
+
+# postgres 
+docker run -d -p 5432:5432 -e POSTGRES_USER='atanych' -e POSTGRES_DB='psy_docker' \
+-e POSTGRES_PASSWORD='asdasd' -v /run/postgresql:/run/postgresql -v pg_volume:/var/lib/postgresql/data --name pg postgres
