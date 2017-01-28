@@ -66,9 +66,9 @@ long_query_time = 2
 
 sudo apt-get install git -y
 cd /var/www
-git clone https://atanych_@bitbucket.org/sms-voteru/helpdesk.git
-git clone https://atanych_@bitbucket.org/sms-voteru/gateway.git
-git clone https://atanych_@bitbucket.org/sms-voteru/api_hd.git
+git clone https://chathelpdesk@bitbucket.org/sms-voteru/helpdesk.git
+git clone https://chathelpdesk@bitbucket.org/sms-voteru/gateway.git
+git clone https://chathelpdesk@bitbucket.org/sms-voteru/api_hd.git
 cd /var/www/helpdesk
 <create database helpdesk>
 <create database gateway>
