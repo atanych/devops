@@ -44,3 +44,6 @@ docker run --rm --volumes-from dbstore2 -v $(pwd):/backup ubuntu bash -c "cd /db
 # postgres 
 docker run -d -p 5432:5432 -e POSTGRES_USER='atanych' -e POSTGRES_DB='psy_docker' \
 -e POSTGRES_PASSWORD='asdasd' -v /run/postgresql:/run/postgresql -v pg_volume:/var/lib/postgresql/data --name pg postgres
+
+# multiple docker-compose environment
+http://staxmanade.com/2016/07/run-multiple-docker-environments--qa--beta--prod--from-the-same-docker-compose-file-/
