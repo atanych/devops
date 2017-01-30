@@ -4,8 +4,8 @@ ansible-playbook playbook.yml -i inventory -vv -t nginx
 
 # playbook sample
 - hosts: localhost
-  vars:
-    root_dir: 'HELLO_WORLD'
+  vars_files:
+    - test.yml
   tasks:
     - shell: uptime
     - name: create directory
