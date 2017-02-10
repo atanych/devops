@@ -1,3 +1,5 @@
+wget -qO- https://get.docker.com/ | sh # install
+
 docker images # images list
 docker run <image> # run container
 docker ps # list of running containers
