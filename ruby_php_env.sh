@@ -43,15 +43,14 @@ memory_limit = 1024M
 
 # php5.6-fpm config
 sudo nano /etc/php/5.6/fpm/pool.d/www.conf
-pm.max_children = 600
-pm.start_servers = 240
-pm.min_spare_servers = 160
-pm.max_spare_servers = 320
-request_terminate_timeout = 30s
-php_flag[display_errors] = on
-php_admin_value[error_log] = /var/log/fpm-php.www.log
-php_admin_flag[log_errors] = on
-php_admin_value[memory_limit] = 32M
+pm.max_children = 900
+pm.start_servers = 360
+pm.min_spare_servers = 240
+pm.max_spare_servers = 480
+request_terminate_timeout = 30s (is not used now)
+#php_flag[display_errors] = on
+#php_admin_value[error_log] = /var/log/fpm-php.www.log
+#php_admin_flag[log_errors] = on
 
 sudo service php5.6-fpm restart
 
