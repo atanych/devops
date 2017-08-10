@@ -40,6 +40,9 @@ sudo nano /etc/php/5.6/fpm/php.ini
 short_open_tag = On
 session.gc_maxlifetime = 2592000
 memory_limit = 1024M
+date.timezone = Europe/Moscow
+sudo nano /etc/php/5.6/cli/php.ini
+date.timezone = Europe/Moscow
 
 # php5.6-fpm config
 sudo nano /etc/php/5.6/fpm/pool.d/www.conf
