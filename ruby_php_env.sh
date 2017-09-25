@@ -64,6 +64,7 @@ git clone https://chathelpdesk@bitbucket.org/sms-voteru/api_hd.git
 
 cp /var/www/helpdesk/config/db.sample.php /var/www/helpdesk/config/db.php
 cp /var/www/helpdesk/config/db-gateway.sample.php /var/www/helpdesk/config/db-gateway.php
+cp /var/www/helpdesk/config/db-statistics.sample.php /var/www/helpdesk/config/db-statistics.php
 cp /var/www/helpdesk/config/params-local.sample.php /var/www/helpdesk/config/params-local.php
 cp /var/www/helpdesk/config/mailgun.sample.php /var/www/helpdesk/config/mailgun.php
 cp /var/www/helpdesk/config/redis.sample.php /var/www/helpdesk/config/redis.php
@@ -84,10 +85,16 @@ curl -s https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 composer global require "fxp/composer-asset-plugin:~1.1.1"
 composer install
+
 php yii migrate
 sudo npm install -g bower
 sudo npm install -g gulp-cli
-npm install
+
+# yarn
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt-get update && sudo apt-get install yarn
+yarn install
 
 # deploy script
 mkdir ~/scripts
@@ -111,6 +118,7 @@ slow_query_log_file    = /var/log/mysql/mysql-slow.log
 long_query_time = 2
 
 CREATE DATABASE helpdesk CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE helpdesk_statistics CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'vol4ara';
 
 git clone https://chathelpdesk@bitbucket.org/sms-voteru/gateway.git
@@ -130,7 +138,7 @@ sudo mv composer.phar /usr/local/bin/composer
 composer global require "fxp/composer-asset-plugin:~1.1.1"
 composer install
 php yii migrate
-sudo npm install -g bower
+sudo npm install -g bower (is not actual)
 sudo npm install -g gulp-cli
 npm install
 mkdir ~/scripts
@@ -153,9 +161,9 @@ ssh-keygen -t rsa -b 4096 -C "test@test.com"
 cat ~/.ssh/id_rsa.pub
 bundle install
 cp /var/www/api_hd/config/database.sample.yml /var/www/api_hd/config/database.yml
-nano /var/www/api_hd/config/database.yml
+vim /var/www/api_hd/config/database.yml
 RAILS_ENV=production rake db:migrate
-sudo nano /usr/local/bin/api_hd
+sudo vim /usr/local/bin/api_hd
 sudo chmod 777 /usr/local/bin/api_hd
 <add bash script>
 nano ~/scripts/deploy_api.sh
