@@ -60,12 +60,16 @@ sudo service php7.1-fpm restart
 cd /var/www
 git clone https://chathelpdesk@bitbucket.org/sms-voteru/helpdesk.git
 git clone https://chathelpdesk@bitbucket.org/sms-voteru/stats.git
+git clone https://chathelpdesk@bitbucket.org/sms-voteru/api_hd.git
 
 cp /var/www/helpdesk/config/db.sample.php /var/www/helpdesk/config/db.php
 cp /var/www/helpdesk/config/db-gateway.sample.php /var/www/helpdesk/config/db-gateway.php
 cp /var/www/helpdesk/config/params-local.sample.php /var/www/helpdesk/config/params-local.php
 cp /var/www/helpdesk/config/mailgun.sample.php /var/www/helpdesk/config/mailgun.php
 cp /var/www/helpdesk/config/redis.sample.php /var/www/helpdesk/config/redis.php
+cp /var/www/helpdesk/config/log.sample.php /var/www/helpdesk/config/log-local.php
+cp /var/www/helpdesk/config/mailer.sample.php /var/www/helpdesk/config/mailer-local.php
+cp /var/www/helpdesk/config/file-system.sample.php /var/www/helpdesk/config/file-system.php
 cp /var/www/helpdesk/web/js/widget/new/params.sample.js /var/www/helpdesk/web/js/widget/new/params.js
 mkdir /var/www/helpdesk/web/images/users/client
 mkdir /var/www/helpdesk/web/images/users/temp
@@ -80,6 +84,17 @@ curl -s https://getcomposer.org/installer | php
 sudo mv composer.phar /usr/local/bin/composer
 composer global require "fxp/composer-asset-plugin:~1.1.1"
 composer install
+php yii migrate
+sudo npm install -g bower
+sudo npm install -g gulp-cli
+npm install
+
+# deploy script
+mkdir ~/scripts
+vim ~/scripts/deploy_php.sh
+vim ~/.bash_profile
+<add alias> alias deploy_php="bash --login ~/scripts/deploy_php.sh"
+source ~/.bash_profile
 
 ####
 ## DB_HD
@@ -96,14 +111,12 @@ slow_query_log_file    = /var/log/mysql/mysql-slow.log
 long_query_time = 2
 
 CREATE DATABASE helpdesk CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'vol4ara';
 
-
-
-git clone https://chathelpdesk@bitbucket.org/sms-voteru/helpdesk.git
 git clone https://chathelpdesk@bitbucket.org/sms-voteru/gateway.git
-git clone https://chathelpdesk@bitbucket.org/sms-voteru/api_hd.git
-cd /var/www/helpdesk
+
 CREATE DATABASE gateway CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'vol4ara';
 
 cp /var/www/gateway/config/db.sample.php /var/www/gateway/config/db.php
 cp /var/www/gateway/config/params-local.sample.php /var/www/gateway/config/params-local.php
