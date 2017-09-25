@@ -1,25 +1,26 @@
-# php
-sudo apt-get install software-properties-common python-software-properties -y
-sudo add-apt-repository ppa:ondrej/php (help http://stackoverflow.com/questions/36788873/package-php5-have-no-installation-candidate-ubuntu-16-04)
-sudo apt-get update
-sudo apt-get install php5.6 -y
-sudo apt-get install php5.6-cli php5.6-common php5.6-mysql php5.6-gd php5.6-fpm php5.6-cgi php-pear php5.6-mcrypt php5.6-curl php5.6-intl php5.6-xml php5.6-mbstring php5.6-gd curl php5.6-zip -y
+####
+## WEB
+####
+# php, node, redis
+sudo apt-get install -y python-software-properties
+sudo add-apt-repository -y ppa:ondrej/php
+sudo apt-get update -y
+sudo apt-get install php
+sudo apt-get install php7.1-cli php7.1-common php7.1-mysql php7.1-gd php7.1-fpm php7.1-cgi php-pear php7.1-mcrypt php7.1-curl php7.1-intl php7.1-xml php7.1-mbstring php7.1-gd curl php7.1-zip -y
 sudo apt-get purge apache2
 sudo apt-get install nginx nginx-extras -y
 sudo apt-get install mysql-server -y
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install nodejs redis-server -y
 
-# nginx config
+# nginx
 sudo rm /etc/nginx/sites-enabled/default
 sudo mkdir /usr/share/nginx/www
 sudo chmod 777 -R /usr/share/nginx/www
 sudo touch /usr/share/nginx/www/50x.html
 echo "500 error" >> /usr/share/nginx/www/50x.html
-sudo nano /etc/nginx/sites-enabled/helpdesk
-sudo nano /etc/nginx/sites-enabled/gateway
-sudo nano /etc/nginx/sites-enabled/api
-sudo nano /etc/nginx/nginx.conf
+sudo vim /etc/nginx/sites-enabled/web
+sudo vim /etc/nginx/nginx.conf
 worker_connections 1024;
 geo $limited {
   default 1;
@@ -36,16 +37,16 @@ limit_req_zone  $limit  zone=one:10m   rate=1r/s;
 client_max_body_size 50m;
 
 # php.ini
-sudo nano /etc/php/5.6/fpm/php.ini
+sudo vim /etc/php/7.1/fpm/php.ini
 short_open_tag = On
 session.gc_maxlifetime = 2592000
 memory_limit = 1024M
 date.timezone = Europe/Moscow
-sudo nano /etc/php/5.6/cli/php.ini
+sudo vim /etc/php/7.1/cli/php.ini
 date.timezone = Europe/Moscow
 
-# php5.6-fpm config
-sudo nano /etc/php/5.6/fpm/pool.d/www.conf
+# php7.1-fpm config
+sudo vim /etc/php/7.1/fpm/pool.d/www.conf
 pm.max_children = 900
 pm.start_servers = 360
 pm.min_spare_servers = 240
@@ -55,7 +56,7 @@ request_terminate_timeout = 30s (is not used now)
 #php_admin_value[error_log] = /var/log/fpm-php.www.log
 #php_admin_flag[log_errors] = on
 
-sudo service php5.6-fpm restart
+sudo service php7.1-fpm restart
 
 # mysql config
 sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
