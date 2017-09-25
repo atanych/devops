@@ -9,7 +9,6 @@ sudo apt-get install php
 sudo apt-get install php7.1-cli php7.1-common php7.1-mysql php7.1-gd php7.1-fpm php7.1-cgi php-pear php7.1-mcrypt php7.1-curl php7.1-intl php7.1-xml php7.1-mbstring php7.1-gd curl php7.1-zip -y
 sudo apt-get purge apache2
 sudo apt-get install nginx nginx-extras -y
-sudo apt-get install mysql-server -y
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install nodejs redis-server git -y
 
@@ -58,39 +57,59 @@ request_terminate_timeout = 30s (is not used now)
 
 sudo service php7.1-fpm restart
 
-# mysql config
-sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
-[mysqld]
-sql_mode=NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
-max_connections        = 500
-slow_query_log = 1
-slow_query_log_file    = /var/log/mysql/mysql-slow.log
-long_query_time = 2
-
-sudo apt-get install git -y
 cd /var/www
 git clone https://chathelpdesk@bitbucket.org/sms-voteru/helpdesk.git
-git clone https://chathelpdesk@bitbucket.org/sms-voteru/gateway.git
-git clone https://chathelpdesk@bitbucket.org/sms-voteru/api_hd.git
-cd /var/www/helpdesk
-<create database helpdesk>
-<create database gateway>
+git clone https://chathelpdesk@bitbucket.org/sms-voteru/stats.git
+
 cp /var/www/helpdesk/config/db.sample.php /var/www/helpdesk/config/db.php
 cp /var/www/helpdesk/config/db-gateway.sample.php /var/www/helpdesk/config/db-gateway.php
 cp /var/www/helpdesk/config/params-local.sample.php /var/www/helpdesk/config/params-local.php
 cp /var/www/helpdesk/config/mailgun.sample.php /var/www/helpdesk/config/mailgun.php
 cp /var/www/helpdesk/config/redis.sample.php /var/www/helpdesk/config/redis.php
-cp /var/www/gateway/config/db.sample.php /var/www/gateway/config/db.php
-cp /var/www/gateway/config/params-local.sample.php /var/www/gateway/config/params-local.php
 cp /var/www/helpdesk/web/js/widget/new/params.sample.js /var/www/helpdesk/web/js/widget/new/params.js
 mkdir /var/www/helpdesk/web/images/users/client
 mkdir /var/www/helpdesk/web/images/users/temp
+
 sudo chmod 777 -R /var/www/helpdesk/web/images/users
 sudo chmod 777 -R /var/www/helpdesk/web/images/users/client
-sudo chmod 777 -R /var/www/gateway/web/images
 sudo chmod 777 -R /var/www/helpdesk/web/assets/
 sudo chmod 777 -R /var/www/helpdesk/runtime/
-sudo chmod 777 -R /var/www/helpdesk/web/assets/
+
+# composer
+curl -s https://getcomposer.org/installer | php
+sudo mv composer.phar /usr/local/bin/composer
+composer global require "fxp/composer-asset-plugin:~1.1.1"
+composer install
+
+####
+## DB_HD
+####
+sudo apt-get install mysql-server -y
+# mysql config
+sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
+[mysqld]
+sql_mode=NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+bind-address            = <server_ip>
+max_connections        = 500
+slow_query_log = 1
+slow_query_log_file    = /var/log/mysql/mysql-slow.log
+long_query_time = 2
+
+CREATE DATABASE helpdesk CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
+
+git clone https://chathelpdesk@bitbucket.org/sms-voteru/helpdesk.git
+git clone https://chathelpdesk@bitbucket.org/sms-voteru/gateway.git
+git clone https://chathelpdesk@bitbucket.org/sms-voteru/api_hd.git
+cd /var/www/helpdesk
+CREATE DATABASE gateway CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+cp /var/www/gateway/config/db.sample.php /var/www/gateway/config/db.php
+cp /var/www/gateway/config/params-local.sample.php /var/www/gateway/config/params-local.php
+
+
+sudo chmod 777 -R /var/www/gateway/web/images
 sudo mkdir /var/log/gateway
 sudo chmod 777 -R /var/log/gateway
 curl -s https://getcomposer.org/installer | php
