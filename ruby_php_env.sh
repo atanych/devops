@@ -11,7 +11,7 @@ sudo apt-get purge apache2
 sudo apt-get install nginx nginx-extras -y
 sudo apt-get install mysql-server -y
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get install nodejs redis-server -y
+sudo apt-get install nodejs redis-server git -y
 
 # nginx
 sudo rm /etc/nginx/sites-enabled/default
