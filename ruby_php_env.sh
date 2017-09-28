@@ -142,8 +142,8 @@ sudo npm install -g bower (is not actual)
 sudo npm install -g gulp-cli
 npm install
 mkdir ~/scripts
-nano ~/scripts/deploy_php.sh
-nano ~/.bash_profile
+vim ~/scripts/deploy_php.sh
+vim  ~/.bash_profile
 <add alias> alias deploy_php="bash --login ~/scripts/deploy_php.sh"
 source ~/.bash_profile
 
@@ -172,11 +172,10 @@ nano ~/.bash_profile
 <add alias> alias deploy_api="bash --login ~/scripts/deploy_api.sh"
 source ~/.bash_profile
 mkdir /var/www/api_hd/tmp && mkdir /var/www/api_hd/tmp/pids
-cp /var/www/api_hd/config/puma.backup.rb /var/www/api_hd/config/puma.rb
-nano /var/www/api_hd/config/puma.rb
+cp /var/www/api_hd/config/puma.sample.rb /var/www/api_hd/config/puma.rb
+vim /var/www/api_hd/config/puma.rb
 <add daemonize>
-mkdir /var/www/api_hd/tmp/sockets
-touch /var/www/api_hd/tmp/sockets/puma.sock
+mkdir /var/www/api_hd/tmp/sockets && touch /var/www/api_hd/tmp/sockets/puma.sock
 sudo chmod 777 /var/www/api_hd/tmp/sockets/puma.sock
 deploy_api
 
