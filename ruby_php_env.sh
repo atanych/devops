@@ -14,13 +14,14 @@ sudo apt-get install nodejs redis-server git -y
 
 # nginx
 sudo rm /etc/nginx/sites-enabled/default
-sudo mkdir /usr/share/nginx/www
-sudo chmod 777 -R /usr/share/nginx/www
-sudo touch /usr/share/nginx/www/50x.html
-echo "500 error" >> /usr/share/nginx/www/50x.html
+sudo mkdir /usr/share/nginx/www && sudo chmod 777 -R /usr/share/nginx/www && sudo touch /usr/share/nginx/www/50x.html
+sudo echo "500 error" >> /usr/share/nginx/www/50x.html
 sudo vim /etc/nginx/sites-enabled/web
 sudo vim /etc/nginx/nginx.conf
+
+# events
 worker_connections 1024;
+# http
 geo $limited {
   default 1;
   # whitelist:
@@ -104,6 +105,18 @@ vim ~/.bash_profile
 source ~/.bash_profile
 
 ####
+## GATEWAY
+####
+git clone https://chathelpdesk@bitbucket.org/sms-voteru/gateway.git
+composer install
+cp /var/www/gateway/config/db.sample.php /var/www/gateway/config/db.php
+cp /var/www/gateway/config/params-local.sample.php /var/www/gateway/config/params-local.php
+cp /var/www/gateway/config/file-system.sample.php /var/www/gateway/config/file-system.php
+
+sudo chmod 777 -R /var/www/gateway/web/images && sudo mkdir /var/log/gateway && sudo chmod 777 -R /var/log/gateway
+php yii migrate
+
+####
 ## DB_HD
 ####
 sudo apt-get install mysql-server -y
@@ -121,34 +134,13 @@ CREATE DATABASE helpdesk CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE DATABASE helpdesk_statistics CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'vol4ara';
 
-git clone https://chathelpdesk@bitbucket.org/sms-voteru/gateway.git
-
+####
+## DB_GW 
+####
 CREATE DATABASE gateway CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'vol4ara';
 
-cp /var/www/gateway/config/db.sample.php /var/www/gateway/config/db.php
-cp /var/www/gateway/config/params-local.sample.php /var/www/gateway/config/params-local.php
 
-
-sudo chmod 777 -R /var/www/gateway/web/images
-sudo mkdir /var/log/gateway
-sudo chmod 777 -R /var/log/gateway
-curl -s https://getcomposer.org/installer | php
-sudo mv composer.phar /usr/local/bin/composer
-composer global require "fxp/composer-asset-plugin:~1.1.1"
-composer install
-php yii migrate
-sudo npm install -g bower (is not actual)
-sudo npm install -g gulp-cli
-npm install
-mkdir ~/scripts
-vim ~/scripts/deploy_php.sh
-vim  ~/.bash_profile
-<add alias> alias deploy_php="bash --login ~/scripts/deploy_php.sh"
-source ~/.bash_profile
-
-cd /var/www/gateway
-composer install
 
 # ruby
 \curl -L https://get.rvm.io | bash -s stable
