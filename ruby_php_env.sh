@@ -44,6 +44,8 @@ memory_limit = 1024M
 date.timezone = Europe/Moscow
 sudo vim /etc/php/7.1/cli/php.ini
 date.timezone = Europe/Moscow
+post_max_size = 20M
+upload_max_filesize = 20Mw
 
 # php7.1-fpm config
 sudo vim /etc/php/7.1/fpm/pool.d/www.conf
@@ -171,3 +173,12 @@ mkdir /var/www/api_hd/tmp/sockets && touch /var/www/api_hd/tmp/sockets/puma.sock
 sudo chmod 777 /var/www/api_hd/tmp/sockets/puma.sock
 deploy_api
 
+# elixir
+wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
+sudo apt-get update
+sudo apt-get install esl-erlang
+sudo apt-get install elixir
+mix local.hex
+mix deps.get
+cp /var/www/stats/config/prod.secret.sample.exs /var/www/stats/config/prod.secret.exs
+MIX_ENV=prod mix compile
