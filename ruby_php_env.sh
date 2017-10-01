@@ -160,9 +160,9 @@ RAILS_ENV=production rake db:migrate
 sudo vim /usr/local/bin/api_hd
 sudo chmod 777 /usr/local/bin/api_hd
 <add bash script>
-nano ~/scripts/deploy_api.sh
+vim ~/scripts/deploy_api.sh
 <add [bash] deploy_api>
-nano ~/.bash_profile
+vim ~/.bash_profile
 <add alias> alias deploy_api="bash --login ~/scripts/deploy_api.sh"
 source ~/.bash_profile
 mkdir /var/www/api_hd/tmp && mkdir /var/www/api_hd/tmp/pids
@@ -182,3 +182,23 @@ mix local.hex
 mix deps.get
 cp /var/www/stats/config/prod.secret.sample.exs /var/www/stats/config/prod.secret.exs
 MIX_ENV=prod mix compile
+
+
+
+####
+## LIVE-CHAT
+####
+sudo apt-get install nginx nginx-extras nodejs redis-server git -y
+cd /var/www
+git clone https://chathelpdesk@bitbucket.org/sms-voteru/life_chat.git
+cd /var/www/life_chat
+bundle install
+cp /var/www/life_chat/config/database.sample.yml /var/www/life_chat/config/database.yml
+cp /var/www/life_chat/config/puma.sample.rb /var/www/life_chat/config/puma.rb
+sudo vim /usr/local/bin/life_chat
+mkdir ~/scripts
+vim ~/scripts/deploy_chat.sh
+vim /var/www/life_chat/config/puma.rb
+<add daemonize>
+mkdir /var/www/life_chat/tmp/sockets && touch /var/www/life_chat/tmp/sockets/puma.sock
+sudo chmod 777 /var/www/life_chat/tmp/sockets/puma.sock
