@@ -42,10 +42,10 @@ short_open_tag = On
 session.gc_maxlifetime = 2592000
 memory_limit = 1024M
 date.timezone = Europe/Moscow
+post_max_size = 20M
+upload_max_filesize = 20M
 sudo vim /etc/php/7.1/cli/php.ini
 date.timezone = Europe/Moscow
-post_max_size = 20M
-upload_max_filesize = 20Mw
 
 # php7.1-fpm config
 sudo vim /etc/php/7.1/fpm/pool.d/www.conf
@@ -198,6 +198,7 @@ cp /var/www/life_chat/config/puma.sample.rb /var/www/life_chat/config/puma.rb
 sudo vim /usr/local/bin/life_chat
 mkdir ~/scripts
 vim ~/scripts/deploy_chat.sh
+mkdir /var/www/life_chat/tmp && mkdir /var/www/life_chat/tmp/pids
 vim /var/www/life_chat/config/puma.rb
 <add daemonize>
 mkdir /var/www/life_chat/tmp/sockets && touch /var/www/life_chat/tmp/sockets/puma.sock
