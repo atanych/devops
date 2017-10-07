@@ -91,8 +91,7 @@ composer global require "fxp/composer-asset-plugin:~1.1.1"
 composer install
 
 php yii migrate
-sudo npm install -g bower
-sudo npm install -g gulp-cli
+sudo npm install -g gulp-cli # sudo yarn add -g gulp-cli
 
 # yarn
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
