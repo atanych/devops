@@ -69,7 +69,7 @@ cp /var/www/helpdesk/config/db.sample.php /var/www/helpdesk/config/db.php
 cp /var/www/helpdesk/config/db-gateway.sample.php /var/www/helpdesk/config/db-gateway.php
 cp /var/www/helpdesk/config/db-statistics.sample.php /var/www/helpdesk/config/db-statistics.php
 cp /var/www/helpdesk/config/params-local.sample.php /var/www/helpdesk/config/params-local.php
-cp /var/www/helpdesk/config/mailgun.sample.php /var/www/helpdesk/config/mailgun.php
+cp /var/www/helpdesk/config/mailer.sample.php /var/www/helpdesk/config/mailer.php
 cp /var/www/helpdesk/config/redis.sample.php /var/www/helpdesk/config/redis.php
 cp /var/www/helpdesk/config/log.sample.php /var/www/helpdesk/config/log.php
 cp /var/www/helpdesk/config/log.sample.php /var/www/helpdesk/config/log-local.php
