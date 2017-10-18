@@ -173,6 +173,9 @@ mkdir /var/www/api_hd/tmp/sockets && touch /var/www/api_hd/tmp/sockets/puma.sock
 sudo chmod 777 /var/www/api_hd/tmp/sockets/puma.sock
 deploy_api
 
+# rails_helpdesk
+mkdir /var/www/rails-helpdesk/tmp/sockets && touch /var/www/rails-helpdesk/tmp/sockets/puma.sock
+
 # elixir
 wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
 sudo apt-get update
