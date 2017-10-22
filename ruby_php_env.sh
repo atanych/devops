@@ -150,6 +150,7 @@ source /etc/profile.d/rvm.sh
 rvm install 2.3.0
 rvm @global do gem install bundler
 sudo apt-get install libmysqlclient-dev -y
+sudo apt-get install libmagickwand-dev -y
 cd /var/www/api_hd
 ssh-keygen -t rsa -b 4096 -C "test@test.com"
 cat ~/.ssh/id_rsa.pub
