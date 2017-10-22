@@ -149,6 +149,10 @@ GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'vol4ara';
 source /etc/profile.d/rvm.sh
 rvm install 2.3.0
 rvm @global do gem install bundler
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:george-edison55/cmake-3.x
+sudo apt-get update
+sudo apt-get install cmake -y
 sudo apt-get install libmysqlclient-dev -y
 sudo apt-get install libmagickwand-dev -y
 cd /var/www/api_hd
