@@ -155,9 +155,7 @@ rvm @global do gem install bundler
 sudo apt-get install software-properties-common
 sudo add-apt-repository ppa:george-edison55/cmake-3.x
 sudo apt-get update
-sudo apt-get install cmake -y
-sudo apt-get install libmysqlclient-dev -y
-sudo apt-get install libmagickwand-dev -y
+sudo apt-get install cmake libmysqlclient-dev libmagickwand-dev -y
 cd /var/www/api_hd
 ssh-keygen -t rsa -b 4096 -C "test@test.com"
 cat ~/.ssh/id_rsa.pub
