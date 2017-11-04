@@ -134,18 +134,21 @@ long_query_time = 2
 
 CREATE DATABASE helpdesk CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE DATABASE helpdesk_statistics CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'vol4ara';
+GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'seva1980';
 
 ####
 ## DB_GW 
 ####
 CREATE DATABASE gateway CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'vol4ara';
+GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'seva1980';
 
 
 
 # ruby
-\curl -L https://get.rvm.io | bash -s stable
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB
+cd /tmp
+curl -sSL https://get.rvm.io -o rvm.sh
+cat /tmp/rvm.sh | bash -s stable
 source /etc/profile.d/rvm.sh
 rvm install 2.3.0
 rvm @global do gem install bundler
