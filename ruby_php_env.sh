@@ -63,6 +63,7 @@ cd /var/www
 git clone https://chathelpdesk@bitbucket.org/sms-voteru/helpdesk.git
 git clone https://chathelpdesk@bitbucket.org/sms-voteru/stats.git
 git clone https://chathelpdesk@bitbucket.org/sms-voteru/api_hd.git
+git clone https://chathelpdesk@bitbucket.org/sms-voteru/rails-helpdesk.git
 
 cp /var/www/helpdesk/config/db.sample.php /var/www/helpdesk/config/db.php
 cp /var/www/helpdesk/config/db-gateway.sample.php /var/www/helpdesk/config/db-gateway.php
