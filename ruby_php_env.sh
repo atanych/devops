@@ -131,10 +131,29 @@ max_connections        = 500
 slow_query_log = 1
 slow_query_log_file    = /var/log/mysql/mysql-slow.log
 long_query_time = 2
+server-id = 1
+log_bin = /var/log/mysql/mysql-bin.log
+binlog_do_db = helpdesk
+binlog_do_db = helpdesk_statistics
+binlog_do_db = gateway
+
+GRANT REPLICATION SLAVE ON *.* TO 'slaveuser'@'%' IDENTIFIED BY 'vol4ara';
+FLUSH PRIVILEGES;
+
+# SLAVE https://ruhighload.com/post/%D0%9A%D0%B0%D0%BA+%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B8%D1%82%D1%8C+MySQL+Master-Slave+%D1%80%D0%B5%D0%BF%D0%BB%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8E
+relay-log = /var/log/mysql/mysql-relay-bin.log
+log_bin = /var/log/mysql/mysql-bin.log
+binlog_do_db = helpdesk
+binlog_do_db = helpdesk_statistics
+binlog_do_db = gateway
+
+СHANGE MASTER TO MASTER_HOST='<master_ip>', MASTER_USER='slaveuser', MASTER_PASSWORD='vol4ara',
+MASTER_LOG_FILE = 'mysql-bin.000001', MASTER_LOG_POS = 107; # SHOW MASTER STATUS;
 
 CREATE DATABASE helpdesk CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE DATABASE helpdesk_statistics CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 GRANT ALL ON *.* TO root@'%' IDENTIFIED BY 'seva1980';
+
 
 ####
 ## DB_GW 
