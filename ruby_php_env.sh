@@ -137,6 +137,12 @@ binlog_do_db = helpdesk
 binlog_do_db = helpdesk_statistics
 binlog_do_db = gateway
 
+binlog-ignore-db = mysql
+binlog-ignore-db = sys
+binlog-ignore-db = performance_schema
+binlog-ignore-db = information_schema
+
+
 GRANT REPLICATION SLAVE ON *.* TO 'slaveuser'@'%' IDENTIFIED BY 'vol4ara';
 FLUSH PRIVILEGES;
 
@@ -146,6 +152,12 @@ log_bin = /var/log/mysql/mysql-bin.log
 binlog_do_db = helpdesk
 binlog_do_db = helpdesk_statistics
 binlog_do_db = gateway
+
+binlog-ignore-db = mysql
+binlog-ignore-db = sys
+binlog-ignore-db = performance_schema
+binlog-ignore-db = information_schema
+
 
 СHANGE MASTER TO MASTER_HOST='<master_ip>', MASTER_USER='slaveuser', MASTER_PASSWORD='vol4ara',
 MASTER_LOG_FILE = 'mysql-bin.000001', MASTER_LOG_POS = 107; # SHOW MASTER STATUS;
