@@ -189,7 +189,7 @@ cd /tmp
 curl -sSL https://get.rvm.io -o rvm.sh
 cat /tmp/rvm.sh | bash -s stable
 source /etc/profile.d/rvm.sh
-rvm install 2.3.0
+rvm install 2.4.2
 rvm @global do gem install bundler
 sudo apt-get install software-properties-common
 sudo add-apt-repository ppa:george-edison55/cmake-3.x
@@ -219,6 +219,8 @@ sudo chmod 777 /var/www/api_hd/tmp/sockets/puma.sock
 deploy_api
 
 # rails-helpdesk
+cp /var/www/rails-helpdesk/config/database.sample.yml /var/www/rails-helpdesk/config/database.yml
+vim /var/www/rails-helpdesk/config/database.yml
 sudo vim /usr/local/bin/rails_hd
 sudo chmod 777 /usr/local/bin/rails_hd
 vim ~/scripts/deploy_rails.sh
