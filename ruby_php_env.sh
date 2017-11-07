@@ -158,9 +158,17 @@ binlog-ignore-db = sys
 binlog-ignore-db = performance_schema
 binlog-ignore-db = information_schema
 
-
-СHANGE MASTER TO MASTER_HOST='<master_ip>', MASTER_USER='slaveuser', MASTER_PASSWORD='vol4ara',
-MASTER_LOG_FILE = 'mysql-bin.000001', MASTER_LOG_POS = 107; # SHOW MASTER STATUS;
+CHANGE MASTER TO
+  MASTER_HOST='10.100.19.11',
+  MASTER_USER='slaveuser',
+  MASTER_PASSWORD='vol4ara',
+  MASTER_PORT=3306,
+  MASTER_LOG_FILE='mysql-bin.000003',
+  MASTER_LOG_POS=154,
+  MASTER_CONNECT_RETRY=10; # SHOW MASTER STATUS;
+  
+START SLAVE;
+SHOW SLAVE STATUS\G
 
 CREATE DATABASE helpdesk CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE DATABASE helpdesk_statistics CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
