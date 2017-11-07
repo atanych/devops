@@ -256,6 +256,7 @@ bundle install
 cp /var/www/life_chat/config/database.sample.yml /var/www/life_chat/config/database.yml
 cp /var/www/life_chat/config/puma.sample.rb /var/www/life_chat/config/puma.rb
 sudo vim /usr/local/bin/life_chat
+sudo chmod 777 /usr/local/bin/life_chat
 mkdir ~/scripts
 vim ~/scripts/deploy_chat.sh
 mkdir /var/www/life_chat/tmp && mkdir /var/www/life_chat/tmp/pids
