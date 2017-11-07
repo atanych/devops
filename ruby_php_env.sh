@@ -218,8 +218,18 @@ mkdir /var/www/api_hd/tmp/sockets && touch /var/www/api_hd/tmp/sockets/puma.sock
 sudo chmod 777 /var/www/api_hd/tmp/sockets/puma.sock
 deploy_api
 
-# rails_helpdesk
+# rails-helpdesk
+sudo vim /usr/local/bin/rails_hd
+sudo chmod 777 /usr/local/bin/rails_hd
+vim ~/scripts/deploy_rails.sh
+vim ~/.bash_profile
+mkdir /var/www/rails-helpdesk/tmp && mkdir /var/www/rails-helpdesk/tmp/pids
+cp /var/www/rails-helpdesk/config/puma.sample.rb /var/www/rails-helpdesk/config/puma.rb
+vim /var/www/rails-helpdesk/config/puma.rb
+<add daemonize>
 mkdir /var/www/rails-helpdesk/tmp/sockets && touch /var/www/rails-helpdesk/tmp/sockets/puma.sock
+sudo chmod 777 /var/www/rails-helpdesk/tmp/sockets/puma.sock
+deploy_rails
 
 # elixir
 wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
