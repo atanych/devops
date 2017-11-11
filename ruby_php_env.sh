@@ -71,7 +71,6 @@ cp /var/www/helpdesk/config/db-statistics.sample.php /var/www/helpdesk/config/db
 cp /var/www/helpdesk/config/params-local.sample.php /var/www/helpdesk/config/params-local.php
 cp /var/www/helpdesk/config/mailer.sample.php /var/www/helpdesk/config/mailer.php
 cp /var/www/helpdesk/config/redis.sample.php /var/www/helpdesk/config/redis.php
-cp /var/www/helpdesk/config/log.sample.php /var/www/helpdesk/config/log.php
 cp /var/www/helpdesk/config/log.sample.php /var/www/helpdesk/config/log-local.php
 cp /var/www/helpdesk/config/mailer.sample.php /var/www/helpdesk/config/mailer-local.php
 cp /var/www/helpdesk/config/file-system.sample.php /var/www/helpdesk/config/file-system.php
