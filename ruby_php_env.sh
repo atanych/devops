@@ -5,7 +5,7 @@
 sudo apt-get install -y python-software-properties
 sudo add-apt-repository -y ppa:ondrej/php
 sudo apt-get update -y
-sudo apt-get install php php7.1-cli php7.1-common php7.1-mysql php7.1-gd php7.1-fpm php7.1-cgi php-pear php7.1-mcrypt php7.1-curl php7.1-intl php7.1-xml php7.1-mbstring php7.1-gd curl php7.1-zip -y
+sudo apt-get install php php7.1-cli php7.1-common php7.1-mysql php7.1-gd php7.1-fpm php7.1-cgi php-pear php7.1-mcrypt php7.1-curl php7.1-intl php7.1-xml php7.1-mbstring curl php7.1-zip -y
 sudo apt-get purge apache2
 sudo apt-get install nginx nginx-extras -y
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
