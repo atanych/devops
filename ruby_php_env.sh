@@ -263,3 +263,12 @@ vim /var/www/life_chat/config/puma.rb
 <add daemonize>
 mkdir /var/www/life_chat/tmp/sockets && touch /var/www/life_chat/tmp/sockets/puma.sock
 sudo chmod 777 /var/www/life_chat/tmp/sockets/puma.sock
+
+
+####
+## PYTHON
+####
+apt-get -y install python-pip
+pip install requests
+mkdir /var/www/helpdesk/smart
+chmod 777 -R /var/www/helpdesk/smart
